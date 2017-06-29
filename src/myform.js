@@ -52,12 +52,6 @@ class MyForm extends Component {
     this.history.push('/');
   }
 
-  edit(event){
-    //getInitialState(){
-    //  inputValue: ''
-    //},
-  }
-
   render() {
     return (
       <div>
