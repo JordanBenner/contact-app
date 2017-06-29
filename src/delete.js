@@ -51,7 +51,7 @@ class Delete extends Component {
           open={this.state.open}
           onRequestClose={this.handleClose}
         >
-          Discard draft?
+        Do you want to Delete this contact?
         </Dialog>
       </div>
     );

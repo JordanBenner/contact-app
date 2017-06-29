@@ -15,7 +15,15 @@ import './myform.css';
 class MyForm extends Component {
   constructor(props) {
     super(props);
-    this.state = {name: '', color: 'blue'};
+
+    if (props.contact) {
+      this.state = props.contact;
+      this.title = 'Edit Contact';
+    } else {
+      this.state = {name: '', color: 'blue'};
+      this.title = 'Add Contact';
+    }
+
     this.history = props.history;
   }
 
@@ -33,14 +41,21 @@ class MyForm extends Component {
 
     var contacts = localStorage.contacts || '[]';
     contacts = JSON.parse(contacts);
-    contacts.push(this.state);
+
+    if (this.props.contact) {
+      contacts[this.props.index] = this.state;
+    } else {
+      contacts.push(this.state);
+    }
 
     localStorage.contacts = JSON.stringify(contacts);
     this.history.push('/');
   }
 
   edit(event){
-    
+    //getInitialState(){
+    //  inputValue: ''
+    //},
   }
 
   render() {
@@ -48,7 +63,7 @@ class MyForm extends Component {
       <div>
       <form onSubmit={event => this.handleSubmit(event)}>
         <Card className="md-card">
-          <CardTitle title="Contact Form"/>
+          <CardTitle title={this.title}/>
             <CardText>
               <TextField floatingLabelText="Full Name" defaultValue={this.state.name} onChange={event => this.update_state(event, 'name')}/>
                 <TextField floatingLabelText="Email Address" defaultValue={this.state.email} onChange={event => this.update_state(event, 'email')}/>

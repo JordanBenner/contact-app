@@ -17,17 +17,16 @@ import {pinkA200} from 'material-ui/styles/colors';
 import Gravatar from 'react-gravatar';
 
 import Delete from './delete';
+import Edit from './edit';
 
-const Home = () => {
+const Home = (props) => {
   var contacts = localStorage.contacts || '[]';
-  // var contacts = localStorage.removeItem || '[]';
-  // localStorage.clear();
   contacts = JSON.parse(contacts);
 
   return (
     <div>
       <h2>Contacts</h2>
-      <ListContacts contacts={contacts}/>
+      <ListContacts contacts={contacts} history={props.history}/>
     </div>
   )
 }
@@ -55,22 +54,32 @@ const NavMenu = (props) => (
   </IconMenu>
 )
 
-const ListContacts = (props) => (
-  <div>
-    <List>
-      {props.contacts.map((c, index) => {
-        return (
-          <ListItem
-            key={index}
-            primaryText={c.name}
-            rightIcon={<ActionGrade color={pinkA200} />}
-            leftAvatar={<Gravatar email={c.email} size={40} />}
-          />
-        )
-      })}
-    </List>
-  </div>
-);
+class ListContacts extends Component {
+  goto(index) {
+    console.log(index);
+    this.props.history.push('/edit/' + index);
+  }
+
+  render() {
+    return (
+      <div>
+        <List>
+          {this.props.contacts.map((c, index) => {
+            return (
+              <ListItem
+                key={index}
+                primaryText={c.name}
+                rightIcon={<ActionGrade color={pinkA200} />}
+                leftAvatar={<Gravatar email={c.email} size={40}
+                onTouchTap={() => this.goto(index)}/>}
+              />
+            )
+          })}
+        </List>
+      </div>
+    )
+  }
+}
 
 
 class App extends Component {
@@ -93,6 +102,7 @@ class App extends Component {
               <Route exact path="/" component={Home}/>
               <Route path="/form" component={MyForm}/>
               <Route path="/delete/:index" component={Delete}/>
+              <Route path="/edit/:index" component={Edit}/>
               <Redirect from="/old-form" to="/form"/>
               <Route path="/article/:slug" component={Article}/>
               <Route component={NoMatch}/>
