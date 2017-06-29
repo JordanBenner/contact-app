@@ -29,6 +29,7 @@ class App extends Component {
             <Switch>
             <Route exact path="/" component={Home}/>
             <Route path="/form" component={MyForm}/>
+            <Redirect from="/old-form" to="/form"/>
             <Route component={NoMatch}/>
           </Switch>
           </div>
