@@ -39,6 +39,10 @@ class MyForm extends Component {
     this.history.push('/');
   }
 
+  edit(event){
+    
+  }
+
   render() {
     return (
       <div>

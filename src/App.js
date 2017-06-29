@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import AppBar from 'material-ui/AppBar';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MenuItem from 'material-ui/MenuItem';
-import DropDownMenu from 'material-ui/DropDownMenu';
 import {BrowserRouter, Route, Link, Switch, Redirect} from 'react-router-dom';
 import './App.css';
 import MyForm from './myform';
@@ -14,15 +12,11 @@ import IconMenu from 'material-ui/IconMenu';
 // homepage list
 import {List, ListItem} from 'material-ui/List';
 import ActionGrade from 'material-ui/svg-icons/action/grade';
-import Divider from 'material-ui/Divider';
-import Avatar from 'material-ui/Avatar';
-import {pinkA200, transparent} from 'material-ui/styles/colors';
+import {pinkA200} from 'material-ui/styles/colors';
 // delete contact
 import Gravatar from 'react-gravatar';
-import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
-import RaisedButton from 'material-ui/RaisedButton';
 
+import Delete from './delete';
 
 const Home = () => {
   var contacts = localStorage.contacts || '[]';
@@ -78,71 +72,6 @@ const ListContacts = (props) => (
   </div>
 );
 
-class Delete extends Component {
-  constructor (props) {
-    super(props);
-    state = {
-    open: false,
-  };
-
-  handleOpen = () => {
-    this.setState({open: true});
-  };
-
-  handleClose = () => {
-    this.setState({open: false});
-  };
-
-  render() {
-    const actions = [
-      <FlatButton
-        label="Cancel"
-        primary={true}
-        onTouchTap={this.handleClose}
-      />,
-      <FlatButton
-        label="Delete"
-        primary={true}
-        onTouchTap={this.doDelete}
-      />,
-    ];
-
-    return (
-      <div>
-        <RaisedButton label="Alert" onTouchTap={this.handleOpen} />
-        <Dialog
-          actions={actions}
-          modal={false}
-          open={this.state.open}
-          onRequestClose={this.handleClose}
-        >
-          Discard draft?
-        </Dialog>
-      </div>
-    );
-  }
-}
-  }
-
-  componentDidMount() {
-    this.doDelete();
-  }
-
-  doDelete () {
-    console.log(this.props.match.params);
-    var contacts = localStorage.contacts || '[]';
-    contacts = JSON.parse(contacts);
-
-    contacts.splice(this.props.match.params.index, 1);
-
-    localStorage.contacts = JSON.stringify(contacts);
-    this.props.history.push('/');
-  }
-
-  render () {
-    return (<div></div>);
-  }
-}
 
 class App extends Component {
   constructor(props) {
