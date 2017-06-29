@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import AppBar from 'material-ui/AppBar';
 
 import {Card, CardActions, CardTitle, CardText} from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -14,9 +13,10 @@ import './myform.css';
 
 
 class MyForm extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {name: '', color: 'blue'};
+    this.history = props.history;
   }
 
   update_state (event, key) {
@@ -30,17 +30,29 @@ class MyForm extends Component {
   handleSubmit(event) {
     console.log('submitted: ' + this.state.name);
     event.preventDefault();
+
+    var contacts = localStorage.contacts || '[]';
+    contacts = JSON.parse(contacts);
+    contacts.push(this.state);
+
+    localStorage.contacts = JSON.stringify(contacts);
+    this.history.push('/');
   }
 
   render() {
     return (
       <div>
-      <AppBar title='My awsome form'/>
       <form onSubmit={event => this.handleSubmit(event)}>
         <Card className="md-card">
-          <CardTitle title="My Form" subtitle="subtitle"/>
+          <CardTitle title="Contact Form"/>
             <CardText>
-              <TextField floatingLabelText="Your Name" defaultValue={this.state.name} onChange={event => this.update_state(event, 'name')}/>
+              <TextField floatingLabelText="Full Name" defaultValue={this.state.name} onChange={event => this.update_state(event, 'name')}/>
+                <TextField floatingLabelText="Email Address" defaultValue={this.state.email} onChange={event => this.update_state(event, 'email')}/>
+                  <TextField floatingLabelText="Phone Number" defaultValue={this.state.phone} onChange={event => this.update_state(event, 'phone')}/>
+                    <TextField floatingLabelText="Address" defaultValue={this.state.address} onChange={event => this.update_state(event, 'address')}/>
+                      <TextField floatingLabelText="City" defaultValue={this.state.city} onChange={event => this.update_state(event, 'city')}/>
+                        <TextField floatingLabelText="state" defaultValue={this.state.state} onChange={event => this.update_state(event, 'state')}/>
+                          <TextField floatingLabelText="Zip Code" defaultValue={this.state.zip} onChange={event => this.update_state(event, 'zip')}/>
               <SelectField floatingLabelText="Color"value={this.state.color}onChange={this.update_select}>
                 <MenuItem value="red" primaryText="Red" />
                 <MenuItem value="blue" primaryText="Blue" />
