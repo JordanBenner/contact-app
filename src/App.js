@@ -19,29 +19,67 @@ import Gravatar from 'react-gravatar';
 import Delete from './delete';
 import Edit from './edit';
 import SearchBar from 'material-ui-search-bar'
-import SearchInput, {createFilter} from 'react-search-input'
 
-const Home = (props) => {
-  var contacts = localStorage.contacts || '[]';
-  contacts = JSON.parse(contacts);
+class Home extends Component {
+  constructor (props) {
+    super(props);
 
-  return (
-    <div className='home-contact'>
-      <h2>Contacts</h2>
-      <ListContacts contacts={contacts} history={props.history}/>
-    </div>
-  )
+    this.full_contact_list = localStorage.contacts || '[]';
+    this.full_contact_list = JSON.parse(this.full_contact_list);
+    this.state = {
+      contacts: this.full_contact_list,
+      searchTerm: ''
+    };
+  }
+
+  // method that recieves action, and sets off state
+  searchUpdated(term) {
+    console.log(term);
+    this.setState({searchTerm: term});
+
+    var filter_contacts = this.filter(term);
+    this.setState({contacts: filter_contacts});
+  }
+
+  filter (term) {
+    var matched = [];
+    this.full_contact_list.forEach(function (c) {
+      if (c.name.toLowerCase().search(term.toLowerCase()) > -1) {
+        matched.push(c);
+      } else if (c.email.toLowerCase().search(term.toLowerCase()) > -1) {
+        matched.push(c);
+      } else if (c.phone.toLowerCase().search(term.toLowerCase()) > -1) {
+        matched.push(c);
+      } else if (c.address.toLowerCase().search(term.toLowerCase()) > -1) {
+        matched.push(c);
+      } else if (c.state.toLowerCase().search(term.toLowerCase()) > -1) {
+        matched.push(c);
+      }
+    });
+    return matched;
+  }
+
+  render () {
+    return (
+      <div className='home-contact'>
+        <h2>Contacts</h2>
+        <SearchBar onChange={(term) => this.searchUpdated(term)} onRequestSearch={() => console.log('requested')} style={{ margin: '0 auto', maxWidth: 800}}/>
+        <ListContacts contacts={this.state.contacts} history={this.props.history}/>
+      </div>
+    )
+  }
 }
 
 const KEYS_TO_FILTERS = ['user.name', 'subject', 'dest.name']
+var filteredEmails = [];
 
-const App = React.createClass({
-  getInitialState () {
-    return { searchTerm: '' }
-  },
-
-  render () {
-    const filteredEmails = emails.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS))
+// const App = React.createClass({
+//   getInitialState () {
+//     return { searchTerm: '' }
+//   },
+//
+//   render () {
+//     const filteredEmails = emails.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS))
 
 const NoMatch = ({ location }) => (
   <div>
@@ -99,10 +137,7 @@ class App extends Component {
    super(props);
    this.state = {value: 2};
  }
-// method that recieves action, and sets off state
-searchUpdated(term) {
-  this.setState({searchTerm: term})
-}
+
 // view renders everthing then goes back to action
   render(){
   return (
@@ -114,15 +149,6 @@ searchUpdated(term) {
                 title="Contact App"
                 iconClassNameRight="muidocs-icon-navigation-expand-more"
                 iconElementLeft={<NavMenu/>}/>
-            <SearchBar onChange={() => console.log('onChange')} onRequestSearch={() => console.log('onRequestSearch')} style={{ margin: '0 auto', maxWidth: 800}}/>
-              <SearchInput className="search-input" onChange={this.searchUpdated} /> {filteredEmails.map(email => {
-                 return (
-                   <div className="mail" key={email.id}>
-                     <div className="from">{email.user.name}</div>
-                     <div className="subject">{email.subject}</div>
-                   </div>
-                 )
-               })}
             <Switch>
               <Route exact path="/" component={Home}/>
               <Route path="/form" component={MyForm}/>
