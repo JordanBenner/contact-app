@@ -19,6 +19,7 @@ import Gravatar from 'react-gravatar';
 import Delete from './delete';
 import Edit from './edit';
 import SearchBar from 'material-ui-search-bar'
+import SearchInput, {createFilter} from 'react-search-input'
 
 const Home = (props) => {
   var contacts = localStorage.contacts || '[]';
@@ -91,7 +92,6 @@ class App extends Component {
 
   render(){
   return (
-    <SearchBar onChange={() => console.log('onChange')} onRequestSearch={() => console.log('onRequestSearch')} style={{ margin: '0 auto', maxWidth: 800}}/>)}
       <MuiThemeProvider>
         <div>
           <BrowserRouter>
@@ -100,7 +100,8 @@ class App extends Component {
                 title="Contact App"
                 iconClassNameRight="muidocs-icon-navigation-expand-more"
                 iconElementLeft={<NavMenu/>}/>
-              <Switch>
+            <SearchBar onChange={() => console.log('onChange')} onRequestSearch={() => console.log('onRequestSearch')} style={{ margin: '0 auto', maxWidth: 800}}/>
+            <Switch>
               <Route exact path="/" component={Home}/>
               <Route path="/form" component={MyForm}/>
               <Route path="/delete/:index" component={Delete}/>
