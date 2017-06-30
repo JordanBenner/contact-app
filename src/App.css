@@ -23,5 +23,9 @@
   to { transform: rotate(360deg); }
 }
  .home-contact{
-   padding: 10px 60px 10px 60px;
+   padding: 54px 140px 54px 140px;
  }
+h2{
+  display: flex;
+  justify-content: center;
+}

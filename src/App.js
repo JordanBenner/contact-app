@@ -18,13 +18,14 @@ import Gravatar from 'react-gravatar';
 
 import Delete from './delete';
 import Edit from './edit';
+import SearchBar from 'material-ui-search-bar'
 
 const Home = (props) => {
   var contacts = localStorage.contacts || '[]';
   contacts = JSON.parse(contacts);
 
   return (
-    <div class='home-contact'>
+    <div className='home-contact'>
       <h2>Contacts</h2>
       <ListContacts contacts={contacts} history={props.history}/>
     </div>
@@ -53,7 +54,7 @@ const NavMenu = (props) => (
     <MenuItem value={2}><Link to="/form">Form</Link></MenuItem>
   </IconMenu>
 )
-
+// repopulate list
 class ListContacts extends Component {
   goto(index) {
     console.log(index);
@@ -90,6 +91,7 @@ class App extends Component {
 
   render(){
   return (
+    <SearchBar onChange={() => console.log('onChange')} onRequestSearch={() => console.log('onRequestSearch')} style={{ margin: '0 auto', maxWidth: 800}}/>)}
       <MuiThemeProvider>
         <div>
           <BrowserRouter>
@@ -115,5 +117,8 @@ class App extends Component {
     )
   }
 }
+
+
+
 
 export default App;
