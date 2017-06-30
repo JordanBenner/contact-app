@@ -33,6 +33,16 @@ const Home = (props) => {
   )
 }
 
+const KEYS_TO_FILTERS = ['user.name', 'subject', 'dest.name']
+
+const App = React.createClass({
+  getInitialState () {
+    return { searchTerm: '' }
+  },
+
+  render () {
+    const filteredEmails = emails.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS))
+
 const NoMatch = ({ location }) => (
   <div>
     <h3>Page not found: {location.pathname}</h3>
@@ -83,13 +93,17 @@ class ListContacts extends Component {
   }
 }
 
-
+// action
 class App extends Component {
   constructor(props) {
    super(props);
    this.state = {value: 2};
  }
-
+// method that recieves action, and sets off state
+searchUpdated(term) {
+  this.setState({searchTerm: term})
+}
+// view renders everthing then goes back to action
   render(){
   return (
       <MuiThemeProvider>
@@ -101,6 +115,14 @@ class App extends Component {
                 iconClassNameRight="muidocs-icon-navigation-expand-more"
                 iconElementLeft={<NavMenu/>}/>
             <SearchBar onChange={() => console.log('onChange')} onRequestSearch={() => console.log('onRequestSearch')} style={{ margin: '0 auto', maxWidth: 800}}/>
+              <SearchInput className="search-input" onChange={this.searchUpdated} /> {filteredEmails.map(email => {
+                 return (
+                   <div className="mail" key={email.id}>
+                     <div className="from">{email.user.name}</div>
+                     <div className="subject">{email.subject}</div>
+                   </div>
+                 )
+               })}
             <Switch>
               <Route exact path="/" component={Home}/>
               <Route path="/form" component={MyForm}/>
@@ -112,7 +134,6 @@ class App extends Component {
             </Switch>
             </div>
           </BrowserRouter>
-
         </div>
       </MuiThemeProvider>
     )
