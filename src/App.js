@@ -48,17 +48,17 @@ class Home extends Component {
         matched.push(c);
       } else if (c.email.toLowerCase().search(term.toLowerCase()) > -1) {
         matched.push(c);
-      } else if (c.phone.toLowerCase().search(term.toLowerCase()) > -1) {
+      } else if (c.phone.toLowerCase().number().search(term.toLowerCase()) > -1) {
         matched.push(c);
-      } else if (c.address.toLowerCase().search(term.toLowerCase()) > -1) {
+      } else if (c.address.toLowerCase().number().search(term.toLowerCase()) > -1) {
         matched.push(c);
       } else if (c.city.toLowerCase().search(term.toLowerCase()) > -1) {
         matched.push(c);
       } else if (c.state.toLowerCase().search(term.toLowerCase()) > -1) {
         matched.push(c);
-      } else if (c.zip.toLowerCase().search(term.toLowerCase()) > -1) {
+      } else if (c.zip.toLowerCase().number().search(term.toLowerCase()) > -1) {
         matched.push(c);
-      } else console.log('No results found.');
+      } else return ('No results found.');
     });
     return matched;
   }
