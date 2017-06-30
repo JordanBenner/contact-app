@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
+import './myform'
 
 class Delete extends Component {
   constructor (props) {

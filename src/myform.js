@@ -75,11 +75,11 @@ class MyForm extends Component {
             </CardText>
             <CardActions>
               <div className='btn'>
-                <div className='btn-submit'>
-              <RaisedButton type='submit' label="Submit" secondary={true}/>
+                <div className='btn-save'>
+              <RaisedButton type='save' label="Save" secondary={true}/>
             </div>
             <div className='btn-delete'>
-                <RaisedButton type='delete' label="Delete" secondary={true}/>
+                <RaisedButton type='delete' label="Delete" secondary={true} href={"/delete/" + this.props.index}/>
               </div>
               </div>
             </CardActions>
