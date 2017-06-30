@@ -7,3 +7,11 @@
   padding: 20px;
 
 }
+.btn{
+  display: flex;
+  justify-content: center;
+  padding: 0px 0px 5px 0px;
+}
+.btn-submit{
+  margin-right: 50px;
+}

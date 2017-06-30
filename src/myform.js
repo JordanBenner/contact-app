@@ -74,7 +74,14 @@ class MyForm extends Component {
               <TimePicker hintText="12hr Format"/>
             </CardText>
             <CardActions>
+              <div className='btn'>
+                <div className='btn-submit'>
               <RaisedButton type='submit' label="Submit" secondary={true}/>
+            </div>
+            <div className='btn-delete'>
+                <RaisedButton type='delete' label="Delete" secondary={true}/>
+              </div>
+              </div>
             </CardActions>
           </Card>
       </form>

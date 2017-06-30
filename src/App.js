@@ -27,7 +27,7 @@ class Home extends Component {
     this.full_contact_list = localStorage.contacts || '[]';
     this.full_contact_list = JSON.parse(this.full_contact_list);
     this.state = {
-      contacts: this.full_contact_list,
+      contacts: this.filter(),
       searchTerm: ''
     };
   }
@@ -43,22 +43,27 @@ class Home extends Component {
 
   filter (term) {
     var matched = [];
-    this.full_contact_list.forEach(function (c) {
-      if (c.name.toLowerCase().search(term.toLowerCase()) > -1) {
+    this.full_contact_list.forEach(function (c, index) {
+      c.index = index;
+      if (term) {
+        if (c.name && c.name.toLowerCase().search(term.toLowerCase()) > -1) {
+          matched.push(c);
+        } else if (c.email && c.email.toLowerCase().search(term.toLowerCase()) > -1) {
+          matched.push(c);
+        } else if (c.phone && c.phone.toLowerCase().search(term.toLowerCase()) > -1) {
+          matched.push(c);
+        } else if (c.address && c.address.toLowerCase().search(term.toLowerCase()) > -1) {
+          matched.push(c);
+        } else if (c.city && c.city.toLowerCase().search(term.toLowerCase()) > -1) {
+          matched.push(c);
+        } else if (c.state && c.state.toLowerCase().search(term.toLowerCase()) > -1) {
+          matched.push(c);
+        } else if (c.zip && c.zip.toLowerCase().search(term.toLowerCase()) > -1) {
+          matched.push(c);
+        }
+      } else {
         matched.push(c);
-      } else if (c.email.toLowerCase().search(term.toLowerCase()) > -1) {
-        matched.push(c);
-      } else if (c.phone.toLowerCase().number().search(term.toLowerCase()) > -1) {
-        matched.push(c);
-      } else if (c.address.toLowerCase().number().search(term.toLowerCase()) > -1) {
-        matched.push(c);
-      } else if (c.city.toLowerCase().search(term.toLowerCase()) > -1) {
-        matched.push(c);
-      } else if (c.state.toLowerCase().search(term.toLowerCase()) > -1) {
-        matched.push(c);
-      } else if (c.zip.toLowerCase().number().search(term.toLowerCase()) > -1) {
-        matched.push(c);
-      } else return ('No results found.');
+      }
     });
     return matched;
   }
@@ -107,14 +112,14 @@ class ListContacts extends Component {
     return (
       <div>
         <List>
-          {this.props.contacts.map((c, index) => {
+          {this.props.contacts.map((c) => {
             return (
               <ListItem
-                key={index}
+                key={c.index}
                 primaryText={c.name}
                 rightIcon={<ActionGrade color={pinkA200} />}
                 leftAvatar={<Gravatar email={c.email} size={40}
-                onTouchTap={() => this.goto(index)}/>}
+                onTouchTap={() => this.goto(c.index)}/>}
               />
             )
           })}
