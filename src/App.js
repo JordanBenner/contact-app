@@ -24,7 +24,7 @@ const Home = (props) => {
   contacts = JSON.parse(contacts);
 
   return (
-    <div class='main'>
+    <div class='home-contact'>
       <h2>Contacts</h2>
       <ListContacts contacts={contacts} history={props.history}/>
     </div>
