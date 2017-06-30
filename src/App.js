@@ -52,9 +52,13 @@ class Home extends Component {
         matched.push(c);
       } else if (c.address.toLowerCase().search(term.toLowerCase()) > -1) {
         matched.push(c);
+      } else if (c.city.toLowerCase().search(term.toLowerCase()) > -1) {
+        matched.push(c);
       } else if (c.state.toLowerCase().search(term.toLowerCase()) > -1) {
         matched.push(c);
-      }
+      } else if (c.zip.toLowerCase().search(term.toLowerCase()) > -1) {
+        matched.push(c);
+      } else console.log('No results found.');
     });
     return matched;
   }
@@ -69,17 +73,6 @@ class Home extends Component {
     )
   }
 }
-
-const KEYS_TO_FILTERS = ['user.name', 'subject', 'dest.name']
-var filteredEmails = [];
-
-// const App = React.createClass({
-//   getInitialState () {
-//     return { searchTerm: '' }
-//   },
-//
-//   render () {
-//     const filteredEmails = emails.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS))
 
 const NoMatch = ({ location }) => (
   <div>
