@@ -19,18 +19,32 @@ import Gravatar from 'react-gravatar';
 import Delete from './delete';
 import Edit from './edit';
 import SearchBar from 'material-ui-search-bar'
-import {auth} from 'contact-app-862c7: null'
+import database, {auth, User} from './firebase'
 
 class Home extends Component {
   constructor (props) {
     super(props);
 
-    this.full_contact_list = localStorage.contacts || '[]';
-    this.full_contact_list = JSON.parse(this.full_contact_list);
+    this.read_data();
+    this.full_contact_list = [];
     this.state = {
       contacts: this.filter(),
       searchTerm: ''
     };
+  }
+
+  read_data () {
+    console.log('checking for data');
+
+    if (User.user) {
+      database.ref('contacts/' + User.user.uid)
+        .once('value').then((contacts) => {
+          this.full_contact_list = contacts.val();
+          this.setState({contacts: this.filter(this.searchTerm)});
+        });
+    } else {
+      setTimeout(() => { this.read_data() }, 300);
+    }
   }
 
   // method that recieves action, and sets off state
@@ -133,7 +147,7 @@ class ListContacts extends Component {
 // action
 class App extends Component {
   login () {
-    console.log(login());
+    console.log('logging in');
     auth()
       .then(function (user) {
         console.log(user);
@@ -154,13 +168,10 @@ class App extends Component {
         <div>
           <BrowserRouter>
             <div>
-              <AppBar
-                title="Contact App"
-                <div>
-                  <button onClick={(e) => this.login(e) = login = ./button}/>
-                </div>
-                iconClassNameRight="muidocs-icon-navigation-expand-more"
-                iconElementLeft={<NavMenu/>}/>
+              <AppBar title="Contact App" iconClassNameRight="muidocs-icon-navigation-expand-more" iconElementLeft={<NavMenu/>}/>
+              <div>
+                <button onClick={(e) => this.login(e)}>Login</button>
+              </div>
             <Switch>
               <Route exact path="/" component={Home}/>
               <Route path="/form" component={MyForm}/>

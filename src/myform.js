@@ -8,8 +8,7 @@ import MenuItem from 'material-ui/MenuItem';
 import Slider from 'material-ui/Slider';
 import TimePicker from 'material-ui/TimePicker';
 import './myform.css';
-import database,{user} from './firebase'
-
+import database,{User} from './firebase';
 
 class MyForm extends Component {
   constructor(props) {
@@ -48,6 +47,9 @@ class MyForm extends Component {
     }
 
     localStorage.contacts = JSON.stringify(contacts);
+
+    database.ref('contacts/' + User.user.uid).set(contacts);
+
     this.history.push('/');
   }
 
