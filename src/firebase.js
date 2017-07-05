@@ -36,4 +36,18 @@ setTimeout(function () {
     });
 }, 2000);
 
+  database.ref('contacts/' + User.user.uid)
+    .on('value', function(contacts) {
+      console.log(contacts.val());
+    });
+
+    firebase.auth()
+  .onAuthStateChanged(function(user) {
+    if (user) {
+      User.user = user;
+      console.log(user);
+    }
+  });
+
+
 export default database;

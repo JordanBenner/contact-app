@@ -157,7 +157,7 @@ class App extends Component {
               <AppBar
                 title="Contact App"
                 <div>
-                  <button onClick={(e) => this.login(e) = login ./button}/>
+                  <button onClick={(e) => this.login(e) = login = ./button}/>
                 </div>
                 iconClassNameRight="muidocs-icon-navigation-expand-more"
                 iconElementLeft={<NavMenu/>}/>
