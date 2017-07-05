@@ -76,7 +76,7 @@ class MyForm extends Component {
             <CardActions>
               <div className='btn'>
                 <div className='btn-save'>
-              <RaisedButton type='save' label="Save" secondary={true}/>
+              <RaisedButton type='save' label="Save" secondary={true} href=''/>
             </div>
             <div className='btn-delete'>
                 <RaisedButton type='delete' label="Delete" secondary={true} href={"/delete/" + this.props.index}/>
