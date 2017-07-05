@@ -8,7 +8,7 @@ import MenuItem from 'material-ui/MenuItem';
 import Slider from 'material-ui/Slider';
 import TimePicker from 'material-ui/TimePicker';
 import './myform.css';
-
+import database,{user} from './firebase'
 
 
 class MyForm extends Component {

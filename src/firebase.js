@@ -29,4 +29,11 @@ export function auth () {
   });
 }
 
+setTimeout(function () {
+  database.ref('contacts/' + User.user.uid)
+    .once('value').then(function(contacts) {
+      console.log(contacts.val());
+    });
+}, 2000);
+
 export default database;

@@ -19,6 +19,7 @@ import Gravatar from 'react-gravatar';
 import Delete from './delete';
 import Edit from './edit';
 import SearchBar from 'material-ui-search-bar'
+import {auth} from 'contact-app-862c7: null'
 
 class Home extends Component {
   constructor (props) {
@@ -131,6 +132,16 @@ class ListContacts extends Component {
 
 // action
 class App extends Component {
+  login () {
+    console.log(login());
+    auth()
+      .then(function (user) {
+        console.log(user);
+      })
+      .catch(function (e) {
+        console.log(e);
+      });
+}
   constructor(props) {
    super(props);
    this.state = {value: 2};
@@ -145,6 +156,9 @@ class App extends Component {
             <div>
               <AppBar
                 title="Contact App"
+                <div>
+                  <button onClick={(e) => this.login(e) = login ./button}/>
+                </div>
                 iconClassNameRight="muidocs-icon-navigation-expand-more"
                 iconElementLeft={<NavMenu/>}/>
             <Switch>
