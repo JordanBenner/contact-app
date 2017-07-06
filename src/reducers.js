@@ -32,6 +32,10 @@ export function contacts (state, action) {
       database.ref('contacts/' + User.user.uid).set(new_state);
       return new_state;
 
+      case 'LOGOUT':
+        console.log(action.data);
+        return action.data;
+
     default:
       return state;
     }

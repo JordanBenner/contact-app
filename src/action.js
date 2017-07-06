@@ -32,3 +32,10 @@ export function setContacts (data) {
     data: data
   }
 }
+
+export function doLogout () {
+  return {
+    type: 'LOGOUT',
+    data: []
+  }
+}

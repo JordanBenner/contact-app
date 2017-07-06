@@ -42,6 +42,11 @@ export function auth () {
   });
 }
 
+export function logout () {
+  User.user = null;
+  firebase.auth().signOut();
+}
+
 firebase.auth()
   .onAuthStateChanged(function(user) {
     if (user) {

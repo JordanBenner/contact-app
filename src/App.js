@@ -22,11 +22,11 @@ import Delete from './delete';
 import Edit from './edit';
 import SearchBar from 'material-ui-search-bar'
 // storage
-import database, {auth, User} from './firebase'
+import database, {auth, User, logout} from './firebase'
 import { Provider } from 'react-redux';
 import store from './store.js';
 import { connect } from 'react-redux';
-import {setContacts} from './action';
+import {setContacts, doLogout} from './action';
 
 class Home extends Component {
   constructor (props) {
@@ -96,6 +96,9 @@ function mapDispatchToProps (dispatch) {
   return {
     setData: function (data) {
       dispatch(setContacts(data))
+    },
+    doLogout2: function () {
+      dispatch(doLogout());
     }
   }
 }
@@ -180,6 +183,7 @@ class App extends Component {
 
   handleToggle = () => this.setState({open: !this.state.open});
 
+
   read_data () {
     console.log('checking for data');
 
@@ -193,6 +197,12 @@ class App extends Component {
     }
   }
 
+  do_logout () {
+    console.log('do_logout');
+    this.props.doLogout2();
+    logout();
+  }
+
 // view renders everthing then goes back to action
   render(){
   return (
@@ -202,7 +212,7 @@ class App extends Component {
             <BrowserRouter>
               <div className='router'>
                 <AppBar title="Contact App" iconClassNameRight="muidocs-icon-navigation-expand-more" onLeftIconButtonTouchTap={this.handleToggle}/>
-              <Drawer width={200} openSecondary={false} open={this.state.open}>
+              <Drawer width={200} openSecondary={false} open={this.state.open} zDepth={2}>
                 <div class='exit'>
                   <button onClick={(e) => this.exit(e)}>X</button>
                 </div>
@@ -210,20 +220,14 @@ class App extends Component {
                   <li><Link to="/">Home</Link></li>
                   <li><Link to="/form">Form</Link></li>
                   <li><Link to="/edit">Edit</Link></li>
+                  <li>
+                    <button onClick={(e) => this.login(e)}>Login</button>
+                  </li>
+                  <li>
+                    <button onClick={(e) => this.do_logout(e)}>Logout</button>
+                  </li>
                 </ul>
-                  <Route exact path="/" component={Home}/>
-                  <Route path="/form" component={MyForm}/>
-                  <Route path="/edit" component={Edit}/>
-
-                </Drawer>
-                <div className='login'>
-                <div>
-                  <button onClick={(e) => this.login(e)}>Login</button>
-                </div>
-                <div>
-                  <button onClick={(e) => this.logout(e)}>Logout</button>
-                </div>
-              </div>
+              </Drawer>
               <Switch>
                 <Route exact path="/" component={Home}/>
                 <Route path="/form" component={MyForm}/>
