@@ -9,6 +9,9 @@ import Slider from 'material-ui/Slider';
 import TimePicker from 'material-ui/TimePicker';
 import './myform.css';
 import database,{User} from './firebase';
+import {addContact} from './action';
+import { connect } from 'react-redux';
+
 
 class MyForm extends Component {
   constructor(props) {
@@ -91,4 +94,11 @@ class MyForm extends Component {
 
   }
 }
+
+// after MyForm class
+MyForm = connect(
+  mapStateToProps, mapDispatchToProps
+)(MyForm)
+
+
 export default MyForm
