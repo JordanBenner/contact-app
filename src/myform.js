@@ -40,18 +40,7 @@ class MyForm extends Component {
     console.log('submitted: ' + this.state.name);
     event.preventDefault();
 
-    var contacts = localStorage.contacts || '[]';
-    contacts = JSON.parse(contacts);
-
-    if (this.props.contact) {
-      contacts[this.props.index] = this.state;
-    } else {
-      contacts.push(this.state);
-    }
-
-    localStorage.contacts = JSON.stringify(contacts);
-
-    database.ref('contacts/' + User.user.uid).set(contacts);
+    this.props.onSubmit(this.state);
 
     this.history.push('/');
   }

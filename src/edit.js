@@ -6,13 +6,15 @@ class Edit extends Component {
   constructor (props) {
     super(props);
 
-    var contacts = localStorage.contacts || '[]';
-    contacts = JSON.parse(contacts);
-
+    // var contacts = localStorage.contacts || '[]';
+    // contacts = JSON.parse(contacts);
+    edit(){
     this.state = {
       contact: contacts[this.props.match.params.index]
+      this.props.history.push('/');
     }
   }
+
   render() {
     return (
       <div>
@@ -21,5 +23,20 @@ class Edit extends Component {
     )
   }
 }
+
+function mapStateToProps (state) {
+  return {
+    contacts: state
+  }
+}
+function mapDispatchToProps (dispatch) {
+  return {
+    onSubmit: function (index, data) {
+      dispatch(editContact(index, data))
+    }
+  }
+}
+
+Edit = connect(mapStateToProps, mapDispatchToProps)(Edit)
 
 export default Edit

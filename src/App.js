@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import AppBar from 'material-ui/AppBar';
+import Drawer from 'material-ui/Drawer';
+import RaisedButton from 'material-ui/RaisedButton';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import MenuItem from 'material-ui/MenuItem';
 import {BrowserRouter, Route, Link, Switch, Redirect} from 'react-router-dom';
@@ -23,32 +25,18 @@ import SearchBar from 'material-ui-search-bar'
 import database, {auth, User} from './firebase'
 import { Provider } from 'react-redux';
 import store from './store.js';
-
+import { connect } from 'react-redux';
+import {setContacts} from './action';
 
 class Home extends Component {
   constructor (props) {
     super(props);
 
-    this.read_data();
     this.full_contact_list = [];
     this.state = {
       contacts: this.filter(),
       searchTerm: ''
     };
-  }
-
-  read_data () {
-    console.log('checking for data');
-
-    if (User.user) {
-      database.ref('contacts/' + User.user.uid)
-        .once('value').then((contacts) => {
-          this.full_contact_list = contacts.val();
-          this.setState({contacts: this.filter(this.searchTerm)});
-        });
-    } else {
-      setTimeout(() => { this.read_data() }, 300);
-    }
   }
 
   // method that recieves action, and sets off state
@@ -92,11 +80,28 @@ class Home extends Component {
       <div className='home-contact'>
         <h2>Contacts</h2>
         <SearchBar onChange={(term) => this.searchUpdated(term)} onRequestSearch={() => console.log('requested')} style={{ margin: '0 auto', maxWidth: 800}}/>
-        <ListContacts contacts={this.state.contacts} history={this.props.history}/>
+        <ListContacts contacts={this.props.contacts} history={this.props.history}/>
       </div>
     )
   }
 }
+
+function mapStateToProps (state) {
+  return {
+    contacts: state
+  }
+}
+
+function mapDispatchToProps (dispatch) {
+  return {
+    setData: function (data) {
+      dispatch(setContacts(data))
+    }
+  }
+}
+
+Home = connect(mapStateToProps, mapDispatchToProps)(Home)
+
 
 const NoMatch = ({ location }) => (
   <div>
@@ -128,23 +133,29 @@ class ListContacts extends Component {
   }
 
   render() {
-    return (
-      <div>
-        <List>
-          {this.props.contacts.map((c) => {
-            return (
-              <ListItem
-                key={c.index}
-                primaryText={c.name}
-                rightIcon={<ActionGrade color={pinkA200} />}
-                leftAvatar={<Gravatar email={c.email} size={40}
-                onTouchTap={() => this.goto(c.index)}/>}
-              />
-            )
-          })}
-        </List>
-      </div>
-    )
+    if (this.props.contacts) {
+      return (
+        <div>
+          <List>
+            {this.props.contacts.map((c, index) => {
+              return (
+                <ListItem
+                  key={index}
+                  primaryText={c.name}
+                  rightIcon={<ActionGrade color={pinkA200} />}
+                  leftAvatar={<Gravatar email={c.email} size={40}
+                  onTouchTap={() => this.goto(index)}/>}
+                />
+              )
+            })}
+          </List>
+        </div>
+      )
+    } else {
+      return (
+        <div>no contacts</div>
+      )
+    }
   }
 }
 
@@ -162,38 +173,67 @@ class App extends Component {
 }
   constructor(props) {
    super(props);
-   this.state = {value: 2};
+  //  this.state = {value: 2};
+  this.state = {open: false};
+  this.read_data();
  }
+
+  handleToggle = () => this.setState({open: !this.state.open});
+
+  read_data () {
+    console.log('checking for data');
+
+    if (User.user) {
+      database.ref('contacts/' + User.user.uid)
+        .once('value').then((contacts) => {
+          this.props.setData(contacts.val());
+        });
+    } else {
+      setTimeout(() => { this.read_data() }, 300);
+    }
+  }
 
 // view renders everthing then goes back to action
   render(){
   return (
-      <MuiThemeProvider>
-        <div>
-          <BrowserRouter>
-            <div>
-              <AppBar title="Contact App" iconClassNameRight="muidocs-icon-navigation-expand-more" iconElementLeft={<NavMenu/>}/>
+
+        <MuiThemeProvider>
+          <div>
+            <BrowserRouter>
               <div>
-                <button onClick={(e) => this.login(e)}>Login</button>
+                <AppBar title="Contact App" iconClassNameRight="muidocs-icon-navigation-expand-more" onLeftIconButtonTouchTap={this.handleToggle}/>
+              <Drawer width={200} openSecondary={false} open={this.state.open} >
+                  narf
+                </Drawer>
+                <div>
+                  <button onClick={(e) => this.login(e)}>Login</button>
+                </div>
+              <Switch>
+                <Route exact path="/" component={Home}/>
+                <Route path="/form" component={MyForm}/>
+                <Route path="/delete/:index" component={Delete}/>
+                <Route path="/edit/:index" component={Edit}/>
+                <Redirect from="/old-form" to="/form"/>
+                <Route path="/article/:slug" component={Article}/>
+                <Route component={NoMatch}/>
+              </Switch>
               </div>
-            <Switch>
-              <Route exact path="/" component={Home}/>
-              <Route path="/form" component={MyForm}/>
-              <Route path="/delete/:index" component={Delete}/>
-              <Route path="/edit/:index" component={Edit}/>
-              <Redirect from="/old-form" to="/form"/>
-              <Route path="/article/:slug" component={Article}/>
-              <Route component={NoMatch}/>
-            </Switch>
-            </div>
-          </BrowserRouter>
-        </div>
-      </MuiThemeProvider>
+            </BrowserRouter>
+          </div>
+        </MuiThemeProvider>
     )
   }
 }
 
+App = connect(mapStateToProps, mapDispatchToProps)(App)
+
+function MainApp () {
+  return (
+    <Provider store={store}>
+      <App/>
+    </Provider>
+  )
+}
 
 
-
-export default App;
+export default MainApp;

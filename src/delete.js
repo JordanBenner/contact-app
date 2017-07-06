@@ -4,6 +4,8 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import './myform'
+import {delContact} from './action';
+import { connect } from 'react-redux';
 
 class Delete extends Component {
   constructor (props) {
@@ -19,13 +21,7 @@ class Delete extends Component {
   }
 
   doDelete () {
-    console.log(this.props.match.params);
-    var contacts = localStorage.contacts || '[]';
-    contacts = JSON.parse(contacts);
-
-    contacts.splice(this.props.match.params.index, 1);
-
-    localStorage.contacts = JSON.stringify(contacts);
+    this.props.onSubmit(this.props.match.params.index);
     this.props.history.push('/');
   }
 
@@ -58,5 +54,20 @@ class Delete extends Component {
     );
   }
 }
+
+function mapStateToProps (state) {
+  return {
+    contacts: state
+  }
+}
+function mapDispatchToProps (dispatch) {
+  return {
+    onSubmit: function (index) {
+      dispatch(delContact(index))
+    }
+  }
+}
+
+Delete = connect(mapStateToProps, mapDispatchToProps)(Delete)
 
 export default Delete
