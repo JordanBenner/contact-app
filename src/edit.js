@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 
 import MyForm from './myform';
+import {editContact} from './action';
+import { connect } from 'react-redux';
 
 class Edit extends Component {
   constructor (props) {
@@ -8,17 +10,12 @@ class Edit extends Component {
 
     // var contacts = localStorage.contacts || '[]';
     // contacts = JSON.parse(contacts);
-    edit(){
-    this.state = {
-      contact: contacts[this.props.match.params.index]
-      this.props.history.push('/');
-    }
   }
 
   render() {
     return (
       <div>
-        <MyForm contact={this.state.contact} index={this.props.match.params.index} history={this.props.history}/>
+        <MyForm index={this.props.match.params.index} history={this.props.history}/>
       </div>
     )
   }

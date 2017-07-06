@@ -203,7 +203,15 @@ class App extends Component {
               <div>
                 <AppBar title="Contact App" iconClassNameRight="muidocs-icon-navigation-expand-more" onLeftIconButtonTouchTap={this.handleToggle}/>
               <Drawer width={200} openSecondary={false} open={this.state.open} >
-                  narf
+                <ul>
+                  <li><Link to="/">Home</Link></li>
+                  <li><Link to="/form">Form</Link></li>
+                  <li><Link to="/edit">Edit</Link></li>
+                </ul>
+                  <Route exact path="/" component={Home}/>
+                  <Route path="/form" component={MyForm}/>
+                  <Route path="/edit" component={Edit}/>
+
                 </Drawer>
                 <div>
                   <button onClick={(e) => this.login(e)}>Login</button>

@@ -26,9 +26,11 @@ export function contacts (state, action) {
       console.log(action.data || []);
       return action.data || [];
 
-    case 'EDIT_CONTACTS':
-      console.log(action.data || []);
-      return action.data || [];
+    case 'EDIT_CONTACT':
+      var new_state = [...state];
+      new_state[action.index] = action.data;
+      database.ref('contacts/' + User.user.uid).set(new_state);
+      return new_state;
 
     default:
       return state;
