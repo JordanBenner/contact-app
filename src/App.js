@@ -19,7 +19,11 @@ import Gravatar from 'react-gravatar';
 import Delete from './delete';
 import Edit from './edit';
 import SearchBar from 'material-ui-search-bar'
+// storage
 import database, {auth, User} from './firebase'
+import { Provider } from 'react-redux';
+import store from './store.js';
+
 
 class Home extends Component {
   constructor (props) {

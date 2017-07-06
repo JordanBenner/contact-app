@@ -95,10 +95,21 @@ class MyForm extends Component {
   }
 }
 
+function mapStateToProps (state) {
+  return {
+    contacts: state
+  }
+}
+function mapDispatchToProps (dispatch) {
+  return {
+    onSubmit: function (index, data) {
+      dispatch(addContact(index, data))
+    }
+  }
+}
+
 // after MyForm class
-MyForm = connect(
-  mapStateToProps, mapDispatchToProps
-)(MyForm)
+MyForm = connect(mapStateToProps, mapDispatchToProps)(MyForm)
 
 
 export default MyForm
