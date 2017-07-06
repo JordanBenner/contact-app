@@ -198,11 +198,14 @@ class App extends Component {
   return (
 
         <MuiThemeProvider>
-          <div>
+          <div className='theme'>
             <BrowserRouter>
-              <div>
+              <div className='router'>
                 <AppBar title="Contact App" iconClassNameRight="muidocs-icon-navigation-expand-more" onLeftIconButtonTouchTap={this.handleToggle}/>
-              <Drawer width={200} openSecondary={false} open={this.state.open} >
+              <Drawer width={200} openSecondary={false} open={this.state.open}>
+                <div class='exit'>
+                  <button onClick={(e) => this.exit(e)}>X</button>
+                </div>
                 <ul>
                   <li><Link to="/">Home</Link></li>
                   <li><Link to="/form">Form</Link></li>
@@ -213,7 +216,7 @@ class App extends Component {
                   <Route path="/edit" component={Edit}/>
 
                 </Drawer>
-                <div>
+                <div className='login'>
                   <button onClick={(e) => this.login(e)}>Login</button>
                 </div>
               <Switch>
