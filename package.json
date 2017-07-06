@@ -9,9 +9,11 @@
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-gravatar": "^2.6.3",
+    "react-redux": "^5.0.5",
     "react-router-dom": "^4.1.1",
     "react-scripts": "1.0.9",
-    "react-tap-event-plugin": "^2.0.1"
+    "react-tap-event-plugin": "^2.0.1",
+    "redux": "^3.7.1"
   },
   "scripts": {
     "start": "react-scripts start",
