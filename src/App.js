@@ -217,8 +217,13 @@ class App extends Component {
 
                 </Drawer>
                 <div className='login'>
+                <div>
                   <button onClick={(e) => this.login(e)}>Login</button>
                 </div>
+                <div>
+                  <button onClick={(e) => this.logout(e)}>Logout</button>
+                </div>
+              </div>
               <Switch>
                 <Route exact path="/" component={Home}/>
                 <Route path="/form" component={MyForm}/>
