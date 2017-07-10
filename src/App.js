@@ -213,10 +213,10 @@ class App extends Component {
               <div className='router'>
                 <AppBar title="Contact App" iconClassNameRight="muidocs-icon-navigation-expand-more" onLeftIconButtonTouchTap={this.handleToggle}/>
               <Drawer width={200} openSecondary={false} open={this.state.open} zDepth={2}>
-                <div class='exit'>
+                <div className='exit'>
                   <button onClick={(e) => this.exit(e)}>X</button>
                 </div>
-                <ul>
+                <ul className="nav-links">
                   <li><Link to="/">Home</Link></li>
                   <li><Link to="/form">Form</Link></li>
                   <li><Link to="/edit">Edit</Link></li>

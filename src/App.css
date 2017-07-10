@@ -33,6 +33,7 @@
 h2{
   display: flex;
   justify-content: center;
+  font-size: 70px;
 
 }
 
@@ -50,4 +51,18 @@ body{
 }
 List{
       margin: 24px 118px;
+}
+
+.nav-links a {
+  text-decoration: none;
+}
+
+ul.nav-links {
+  list-style-type: none;
+  margin: 0;
+}
+
+
+.nav-links li {
+  margin: 20px 0;
 }
