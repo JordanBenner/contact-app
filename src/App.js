@@ -229,12 +229,12 @@ class App extends Component {
                 </ul>
               </Drawer>
               <Switch>
-                <Route exact path="/" component={Home}/>
-                <Route path="/form" component={MyForm}/>
-                <Route path="/delete/:index" component={Delete}/>
-                <Route path="/edit/:index" component={Edit}/>
-                <Redirect from="/old-form" to="/form"/>
-                <Route path="/article/:slug" component={Article}/>
+                <Route exact path="/contact-app/" component={Home}/>
+                <Route path="/contact-app/form" component={MyForm}/>
+                <Route path="/contact-app/delete/:index" component={Delete}/>
+                <Route path="/contact-app/edit/:index" component={Edit}/>
+                <Redirect from="/contact-app/old-form" to="/form"/>
+                <Route path="/contact-app/article/:slug" component={Article}/>
                 <Route component={NoMatch}/>
               </Switch>
               </div>
