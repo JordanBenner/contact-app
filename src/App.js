@@ -28,6 +28,11 @@ import store from './store.js';
 import { connect } from 'react-redux';
 import {setContacts, doLogout} from './action';
 
+var BASE_URL = '';
+if (process.env.PUBLIC_URL) {
+  BASE_URL = '/contact-app'
+}
+
 class Home extends Component {
   constructor (props) {
     super(props);
@@ -229,12 +234,12 @@ class App extends Component {
                 </ul>
               </Drawer>
               <Switch>
-                <Route exact path="/contact-app/" component={Home}/>
-                <Route path="/contact-app/form" component={MyForm}/>
-                <Route path="/contact-app/delete/:index" component={Delete}/>
-                <Route path="/contact-app/edit/:index" component={Edit}/>
-                <Redirect from="/contact-app/old-form" to="/form"/>
-                <Route path="/contact-app/article/:slug" component={Article}/>
+                <Route exact path={BASE_URL + '/'} component={Home}/>
+                <Route path={BASE_URL + '/form' } component={MyForm}/>
+                <Route path={BASE_URL + '/delete/:index' } component={Delete}/>
+                <Route path={BASE_URL + '/edit/:index' } component={Edit}/>
+                <Redirect from={BASE_URL + '/old-form' } to="/form"/>
+                <Route path={BASE_URL + '/article/:slug' } component={Article}/>
                 <Route component={NoMatch}/>
               </Switch>
               </div>
