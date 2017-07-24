@@ -13,7 +13,7 @@ import {addContact, editContact} from './action';
 import { connect } from 'react-redux';
 
 
-class MyForm extends Component {
+export class MyForm extends Component {
   constructor(props) {
     super(props);
     this.state = {name: 'j doe', color: 'blue'};
@@ -114,7 +114,7 @@ function mapDispatchToProps (dispatch) {
 }
 
 // after MyForm class
-MyForm = connect(mapStateToProps, mapDispatchToProps)(MyForm)
+var MyFormRedux = connect(mapStateToProps, mapDispatchToProps)(MyForm)
 
 
-export default MyForm
+export default MyFormRedux
