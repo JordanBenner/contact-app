@@ -27,6 +27,10 @@ import { Provider } from 'react-redux';
 import store from './store.js';
 import { connect } from 'react-redux';
 import {setContacts, doLogout} from './action';
+// testing
+import {mount, shallow, render} from 'enzyme';
+import chai from 'chai';
+import chaiEnzyme from 'chai-enzyme';
 
 var BASE_URL = '';
 if (process.env.PUBLIC_URL) {
